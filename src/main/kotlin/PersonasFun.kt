@@ -14,12 +14,12 @@ class PersonasFun {
             return false
         }
 
-        fun corroborarTipo(pokemon: Pokemon?) : Boolean{
+        fun corroborarTipo(pokemon: Pokemon?) : String{
             pokemon?.let {
                 return when (it.name) {
-                    "Pikachu" -> it.type == "Eléctrico"
-                    "Charmander" -> it.type == "Fuego"
-                    "Mew"-> it.type == "Síkico"
+                    "Pikachu" -> "Eléctrico"
+                    "Charmander" -> "Fuego"
+                    "Mew"-> "Síkico"
                     else -> { throw PokemonFallido()}
                 }
             } ?: throw  PokemonNuloException()

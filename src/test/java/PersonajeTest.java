@@ -156,16 +156,64 @@ public class PersonajeTest {
     @Test
     public void testEsPokemonObediente_XXX() {
         // TODO 2,5p
-        // PersonasFun.Companion.esPokemonObediente(examen.personas[0]);
+        PersonasFun.Companion.esPokemonObediente(examen.personas[0]);
 
+    }
+
+    @Test
+    public void testEsPokemonObediente_PersonaNulaException() {
+        Persona p = null;
+        Assertions.assertThrows(PersonaNulaException.class, () -> PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_PokemonFallido() {
+        Persona p = examen.personas[3];
+        Assertions.assertThrows(PokemonFallido.class, () -> PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_PokemonNuloExcaption() {
+        Persona p = new Persona("","", null, true, true);
+        Assertions.assertThrows(PokemonNuloException.class, () -> PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_Caso1() {
+        Persona p = new Persona("","", new Pokemon("","","", 5), false, false);
+        Assertions.assertFalse(PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_Caso2() {
+        Persona p = new Persona("","", new Pokemon("","","", 5), true, false);
+        Assertions.assertTrue(PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_Caso3() {
+        Persona p = new Persona("","", new Pokemon("","","", 10), true, false);
+        Assertions.assertFalse(PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_Caso4() {
+        Persona p = new Persona("","", new Pokemon("","","", 10), true, true);
+        Assertions.assertTrue(PersonasFun.Companion.esPokemonObediente(p));
+    }
+
+    @Test
+    public void testEsPokemonObediente_Caso5() {
+        Persona p = new Persona("","", new Pokemon("","","", 20), true, true);
+        Assertions.assertFalse(PersonasFun.Companion.esPokemonObediente(p));
     }
 
     // TODO: (2,5 puntos) Piensa en que test son necesarios para probar la función "corroborarTipo" y realizalos.
     //  Si el Pokémon es null deberá devolver PokemonNuloException
     //  Si el Pokémon no es ni Charmander, ni Mew ni Pikachu, devolverá PokemonFallidoException
-    //  Si la pokemon es ni Charmander, devolverá "Fuego"
-    //  Si la pokemon es ni Pikachu, devolverá "Eléctrico"
-    //  Si la pokemon es ni Mew, devolverá "Psíquico"
+    //  Si la pokemon es Charmander, devolverá "Fuego"
+    //  Si la pokemon es Pikachu, devolverá "Eléctrico"
+    //  Si la pokemon es Mew, devolverá "Psíquico"
     @Test
     public void testTipoPokemon_XXX() {
         // TODO 2,5p
@@ -173,4 +221,39 @@ public class PersonajeTest {
 
     }
 
+    @Test
+    public void testTipoPokemon_PokemonNuloException() {
+        Pokemon p = null;
+        Assertions.assertThrows(PokemonNuloException.class, () -> PersonasFun.Companion.corroborarTipo(p));
+    }
+
+    @Test
+    public void testTipoPokemon_PokemonFallidoException() {
+        Pokemon p = new Pokemon("a", "a", "a", 100);
+        Assertions.assertThrows(PokemonFallido.class, () -> PersonasFun.Companion.corroborarTipo(p));
+    }
+
+    @Test
+    public void testTipoPokemon_Pikachu() {
+        Pokemon p = new Pokemon("Pikachu", "a", "a", 100);
+        String valorEsperado = "Eléctrico";
+        String valorReal = PersonasFun.Companion.corroborarTipo(p);
+        Assertions.assertEquals(valorEsperado, valorReal);
+    }
+
+    @Test
+    public void testTipoPokemon_Charmander() {
+        Pokemon p = new Pokemon("Charmander", "a", "a", 100);
+        String valorEsperado = "Fuego";
+        String valorReal = PersonasFun.Companion.corroborarTipo(p);
+        Assertions.assertEquals(valorEsperado, valorReal);
+    }
+
+    @Test
+    public void testTipoPokemon_Mew() {
+        Pokemon p = new Pokemon("Mew", "a", "a", 100);
+        String valorEsperado = "Psíquico";
+        String valorReal = PersonasFun.Companion.corroborarTipo(p);
+        Assertions.assertEquals(valorEsperado, valorReal);
+    }
 }
